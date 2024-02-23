@@ -4,10 +4,10 @@ import com.c1645njava.NoCountry.entity.Categoria;
 import java.util.List;
 
 public interface CategoriaService {
-    Categoria crearCategoria(Categoria categoria);
-    List<Categoria> obtenerTodasCategorias();
-    Categoria obtenerCategoriaPorId(Long id);
-    Categoria actualizarCategoria(Long id, Categoria categoria);
+	CategoriaDTO crearCategoria(CategoriaDTO categoriaDTO);
+    List<CategoriaDTO> obtenerTodasCategorias();
+    CategoriaDTO obtenerCategoriaPorId(Long id);
+    CategoriaDTO actualizarCategoria(Long id, CategoriaDTO categoriaDTO);
     void eliminarCategoria(Long id);
 }
 //CategoriaService define los métodos que estarán disponibles para realizar operaciones relacionadas con las categorías
