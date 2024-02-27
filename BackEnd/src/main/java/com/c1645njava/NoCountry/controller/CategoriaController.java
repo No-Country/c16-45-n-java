@@ -1,16 +1,18 @@
 package com.c1645njava.NoCountry.controller;
 
 
+import com.c1645njava.NoCountry.entity.Categoria;
+import com.c1645njava.NoCountry.service.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tu.paquete.entity.Categoria;
-import tu.paquete.service.CategoriaService;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/categorias")
+@CrossOrigin(origins = "https://nocountryfront-production.up.railway.app/")
 public class CategoriaController {
 
     @Autowired

@@ -1,4 +1,4 @@
-package com.c1645njava.NoCountry.controller;
+package com.c1645njava.NoCountry.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
