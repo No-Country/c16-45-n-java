@@ -1,12 +1,8 @@
-import { BrowserRouter, Link, Route, Router, Routes } from "react-router-dom";
-import reactLogo from "./assets/react.svg";
-import { Login } from "./components/Login/Login";
-import { Prueba } from "./components/Prueba/Prueba";
-
-import viteLogo from "/vite.svg";
-// import {FrmLogin} from './components/Login/FrmLogin.jsx'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+//import { Login } from "./components/Login/Login.jsx";
 import { Container } from "@chakra-ui/react";
-// import { Login } from './components/Login/Login.jsx'
+
+import { Principal } from "./components/products/Principal.jsx";
 
 function App() {
   return (
@@ -14,16 +10,14 @@ function App() {
       <Container
         display="flex"
         alignContent="center"
-        justifySelf="center"
+        justifyContent="center"
         minH="100vh"
+        minW="100vw"
       >
-       
-          <Routes>
-            <Route exact path="/" element={<Login />}></Route>
-            <Route exact path="/prueba" element={<Prueba />}></Route>
-            
-          </Routes>
-       
+        <Routes>
+          {/* <Route exact path="/" element={<Login />}></Route> */}
+          <Route exact path="/productos" element={<Principal />}></Route>
+        </Routes>
       </Container>
     </BrowserRouter>
   );

@@ -1,8 +1,9 @@
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+
 import {
   Box,
   Button,
-  Flex,
+  Center,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -11,18 +12,17 @@ import {
   InputRightElement,
   Text,
 } from "@chakra-ui/react";
-import { Field, Form, Formik} from "formik";
+import { Field, Form, Formik } from "formik";
 import { useContext, useState } from "react";
 import { LoginContext } from "../context/LoginContext";
-// import { prueba } from "../Prueba/Prueba";
+
 import { useNavigate } from "react-router-dom";
-
-
+//const URI_BASE_API="http://localhost:8080/api/"
 
 export const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const { login,actualizarLogin,valido } = useContext(LoginContext);
+  const { actualizarLogin } = useContext(LoginContext);
 
   const [ver, setVer] = useState("password");
   function verClave(event) {
@@ -30,25 +30,59 @@ export const Login = () => {
     ver == "password" ? setVer("text") : setVer("password");
   }
 
+  async function enviarDatosAlaApi(values) {
+    try {
+      const response = await fetch(import.meta.env.VITE_API+"auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      if (response.ok) {
+        // Procesar la respuesta exitosa, por ejemplo, redireccionar o actualizar el estado de autenticación
+        const data = await response.json();
+        if (data) {
+          actualizarLogin(true);
+          navigate("/productos");
+        } else {
+          setError("Credenciales invalidas");
+        }
+      } else {
+        // Procesar errores de la API
+        const data = await response.json();
+        setError(data.message); // Ajusta esto según la estructura de respuesta de tu API
+      }
+    } catch (error) {
+      console.error("Error al realizar la solicitud:", error);
+      setError("Error al conectarse al servidor");
+    }
+  }
+
   return (
-    <Flex justifyContent={"center"} m="20px">
+    <Center>
       <Box
-        bgColor={"gray.300"}
+        bgColor={"white"}
         p="30px"
         borderRadius={"10px"}
-        boxShadow={"2px 2px 1px #999"}
+        boxShadow={" 5px 5px 2px rgba(15,15,19,0.2)"} //no esta andando el colo de sta forma
+        h="300px"
       >
         <Box>
-          {error != "" && 
-          <Text 
-          as="h2"
-          color='red'
-          fontWeight={'bold'}
-          bgColor={'#f9bfab'}
-          p='10px'
-          m='10px'
-          borderRadius={'10px'}
-          >{error}</Text>}
+          {error != "" && (
+            <Text
+              as="h2"
+              color="red"
+              fontWeight={"bold"}
+              bgColor={"#f9bfab"}
+              p="10px"
+              m="10px"
+              borderRadius={"10px"}
+            >
+              {error}
+            </Text>
+          )}
         </Box>
         <Formik
           initialValues={{ email: "", password: "" }}
@@ -64,22 +98,8 @@ export const Login = () => {
             return errors;
           }}
           onSubmit={(values, { setSubmitting }) => {
-            
-            if (login.email == values.email && login.pass == values.password) {
-              
-             
-              actualizarLogin(true)
-           
-              navigate('/prueba')
-             
-
-            } else {
-         
-              setError("Credenciales invalidas");
-            }
-
-            setSubmitting(true);
-
+            enviarDatosAlaApi(values);
+            setSubmitting(false);
           }}
         >
           {({ isSubmitting }) => (
@@ -87,17 +107,28 @@ export const Login = () => {
               <Field name="email">
                 {({ field, form }) => (
                   <FormControl
+                    variant="floating"
                     isInvalid={form.errors.email && form.touched.email}
                   >
-                    <FormLabel htmlFor="email" fontWeight="bold">
-                      Email
-                    </FormLabel>
                     <Input
                       {...field}
                       id="email"
-                      placeholder="email"
+                      placeholder=" "
+                      borderColor={"inputDefault"}
+                      _hover={{
+                        border: "2px solid black", // Color del borde al tener foco
+                      }}
+
                       focusBorderColor="rgba(0,0,0,0.04)"
                     />
+                    <FormLabel
+                      htmlFor="email"
+                      fontWeight="bold"
+                      backgroundColor="white"
+                    >
+                      Email
+                    </FormLabel>
+
                     <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                   </FormControl>
                 )}
@@ -106,19 +137,29 @@ export const Login = () => {
               <Field name="password">
                 {({ field, form }) => (
                   <FormControl
+                    variant="floating"
+                    mt="8px"
                     isInvalid={form.errors.password && form.touched.password}
                   >
-                    <FormLabel htmlFor="password" fontWeight="bold">
-                      Password
-                    </FormLabel>
                     <InputGroup>
                       <Input
                         {...field}
                         id="password"
+                        _hover={{
+                          border: "2px solid black", // Color del borde al tener foco
+                        }}
                         type={ver}
-                        placeholder="password"
+                        placeholder=" "
+                        borderColor={"inputDefault"}
                         focusBorderColor="rgba(0,0,0,0.04)"
                       />
+                      <FormLabel
+                      htmlFor="password"
+                      fontWeight="bold"
+                      backgroundColor="white"
+                    >
+                      Password
+                    </FormLabel>
                       <InputRightElement>
                         {ver == "password" && (
                           <ViewIcon
@@ -140,7 +181,7 @@ export const Login = () => {
                         )}
                       </InputRightElement>
                     </InputGroup>
-
+                    
                     <FormErrorMessage>{form.errors.password}</FormErrorMessage>
                   </FormControl>
                 )}
@@ -159,6 +200,8 @@ export const Login = () => {
           )}
         </Formik>
       </Box>
-    </Flex>
+      
+     
+    </Center>
   );
 };
