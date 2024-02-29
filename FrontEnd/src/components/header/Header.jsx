@@ -7,15 +7,7 @@ import { faFilter } from "@fortawesome/free-solid-svg-icons";
 import { BASE_URL } from "@/utils/connectApi";
 
 export default function Header() {
-  const [findProduct, setFindProduct] = useState(null);
-
-  const searchHandler = (searchValue) => {
-    BASE_URL.get("listar")
-      .then((response) => response.data)
-      .then((data) => {
-        setFindProduct(data.find((product) => product.detalle === searchValue));
-      });
-  };
+  
 
   return (
     <Flex
@@ -28,7 +20,7 @@ export default function Header() {
         Productos
       </Heading>
       <Box display="flex" w="80%" p="2">
-        <Searchbar onSearch={searchHandler} />
+        <Searchbar/>
         <IconButton>
           <Icon alignSelf="center">
             <FontAwesomeIcon icon={faFilter} size="xl" />
@@ -36,7 +28,7 @@ export default function Header() {
         </IconButton>
         <ModalWindow />
       </Box>
-      <p>{findProduct}</p>
+   
     </Flex>
   );
 }

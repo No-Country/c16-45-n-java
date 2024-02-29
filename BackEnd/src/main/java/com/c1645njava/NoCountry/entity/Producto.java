@@ -30,9 +30,9 @@ public class Producto {
 
     @Column(nullable = false)
     private int cantidad;
-/*
-    private Categoria categoria;
-    */
+
+    private String categoria;
+
     private String marca;
 
     private String nombreProveedor;

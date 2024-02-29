@@ -29,6 +29,21 @@ export default function ProductContextProvider({ children }) {
     },
   });
 
+  const onFind = (producto) => {
+    if(producto!==''){
+
+      setProductManager((prev) => {
+        return {
+          ...prev,
+          products: prev.products.filter((pro) =>pro.detalle.toLowerCase().includes(producto.toLowerCase()))
+        };
+      })
+    }else{
+      listProducts()
+     
+    }
+    };
+
   const addProducts = (newProduct) => {
     BASE_URL.post("nuevo", newProduct);
     setProductManager((prev) => {
@@ -86,18 +101,21 @@ export default function ProductContextProvider({ children }) {
     console.log(category);
     console.log(confirmation);
   };
+  const listProducts=()=>{
+    BASE_URL.get("listar")
+    .then((response) => {
+      setProductManager((prev) => {
+        return {
+          ...prev,
+          products: response.data,
+        };
+      });
+    })
+    .catch((error) => console.log(error));
+  }
 
   useEffect(() => {
-    BASE_URL.get("listar")
-      .then((response) => {
-        setProductManager((prev) => {
-          return {
-            ...prev,
-            products: response.data,
-          };
-        });
-      })
-      .catch((error) => console.log(error));
+    listProducts()
   }, []);
 
   useEffect(() => {
@@ -124,6 +142,7 @@ export default function ProductContextProvider({ children }) {
       editProducts,
       addNewCategory,
       editCategories,
+      onFind,
     };
   }, [productManager]);
 

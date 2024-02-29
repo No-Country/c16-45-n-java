@@ -8,7 +8,11 @@ import {
   Input,
   ButtonGroup,
   Select,
+  Icon,
 } from "@chakra-ui/react";
+
+import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
+
 import PopoverModal from "@/components/ui/PopoverModal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -219,7 +223,8 @@ export default function ProductForm({ showform }) {
                 fontWeight="bold"
                 backgroundColor="white"
               >
-                Cantidad
+             Cantidad
+
               </FormLabel>
               <ErrorMessage name="quantity" component="div" color="red" />
             </FormControl>
