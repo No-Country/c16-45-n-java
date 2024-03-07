@@ -47,7 +47,7 @@ El objetivo principal es desarrollar una aplicación web que facilite la gestió
 - Virili, Omar
   - [![GitHub](https://img.shields.io/badge/GitHub-Omar-blue?logo=github)](https://github.com/odv144)
   - [![LinkedIn](https://img.shields.io/badge/LinkedIn-Omar-blue?logo=linkedin)](https://www.linkedin.com/in/omar-virili/)
-- Castillo, Omar
+- Castillo, Paulo
   - [![GitHub](https://img.shields.io/badge/GitHub-Omar-blue?logo=github)](https://github.com/pauloCastillo)
   - [![LinkedIn](https://img.shields.io/badge/LinkedIn-Omar-blue?logo=linkedin)](https://www.linkedin.com/in/paulocastillomonroy/)
 
@@ -69,4 +69,5 @@ El objetivo principal es desarrollar una aplicación web que facilite la gestió
 
 ## Stack QA
 
-![Jira-Trello](https://img.shields.io/badge/Jira--Trello-red)
+- Arellano, Paula 
+  - ![Jira-Trello](https://img.shields.io/badge/Jira--Trello-red)
