@@ -1,4 +1,7 @@
 # NO COUNTRY
+[![nocountryforjuniordevs-logo.jpg](https://i.postimg.cc/7YRtPQ99/nocountryforjuniordevs-logo.jpg)](https://postimg.cc/hf91psHQ)
+
+[![Mira-mi.png](https://i.postimg.cc/4y3bKWWd/Mira-mi.png)](https://postimg.cc/tZLVwNQQ)
 
 ## COHORTE
 
@@ -51,6 +54,7 @@ El objetivo principal es desarrollar una aplicación web que facilite la gestió
   - [![GitHub](https://img.shields.io/badge/GitHub-Omar-blue?logo=github)](https://github.com/pauloCastillo)
   - [![LinkedIn](https://img.shields.io/badge/LinkedIn-Omar-blue?logo=linkedin)](https://www.linkedin.com/in/paulocastillomonroy/)
 
+
 ## Stack Back End
 
 ![Java](https://img.shields.io/badge/-Java-red?logo=java) ![Spring MVC](https://img.shields.io/badge/-Spring%20MVC-red?logo=spring) ![Spring Security](https://img.shields.io/badge/-Spring%20Security-red?logo=spring) ![REST](https://img.shields.io/badge/-REST-red?logo=rest)
@@ -69,5 +73,16 @@ El objetivo principal es desarrollar una aplicación web que facilite la gestió
 
 ## Stack QA
 
+![Jira](https://img.shields.io/badge/-Jira-yellow?logo=jira) ![Trello](https://img.shields.io/badge/-Trello-yellow?logo=trello)
+
 - Arellano, Paula 
-  - ![Jira-Trello](https://img.shields.io/badge/Jira--Trello-red)
+   -  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Paula-blue?logo=linkedin)](https://www.linkedin.com/in/paulavanessa/)
+  -  [![GitHub](https://img.shields.io/badge/GitHub-Paula-blue?logo=github)](https://github.com/pvarellano)
+    
+## Stack UX/UI
+
+![Figma](https://img.shields.io/badge/-Figma-blue?logo=figma)
+
+- Rugiero, Sebastian
+  -  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sebastian-blue?logo=linkedin)](https://www.linkedin.com/in/sebastián-rugiero/)
+  -  [![GitHub](https://img.shields.io/badge/GitHub-Sebastian-blue?logo=github)](https://github.com/Sebarugiero1995)
