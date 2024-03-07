@@ -73,7 +73,7 @@ El objetivo principal es desarrollar una aplicación web que facilite la gestió
 
 ## Stack QA
 
-![Jira](https://img.shields.io/badge/-Jira-yellow?logo=jira) ![Trello](https://img.shields.io/badge/-Trello-yellow?logo=trello) [![Google Sheets](https://img.shields.io/badge/Google-Sheets-0A7DAB?style=for-the-badge&logo=google-sheets&logoColor=white)](https://www.google.com/sheets/)
+![Jira](https://img.shields.io/badge/-Jira-yellow?logo=jira) ![Trello](https://img.shields.io/badge/-Trello-yellow?logo=trello) [![Google Docs](https://img.shields.io/badge/Google-Docs-4285F4?style=for-the-badge&logo=google-docs&logoColor=white)](https://www.google.com/docs/)
 
 - Arellano, Paula 
    -  [![LinkedIn](https://img.shields.io/badge/LinkedIn-Paula-blue?logo=linkedin)](https://www.linkedin.com/in/paulavanessa/)
