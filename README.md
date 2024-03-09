@@ -1,7 +1,7 @@
 # NO COUNTRY
-[![nocountryforjuniordevs-logo.jpg](https://i.postimg.cc/7YRtPQ99/nocountryforjuniordevs-logo.jpg)](https://postimg.cc/hf91psHQ)
+<img src="https://i.postimg.cc/7YRtPQ99/nocountryforjuniordevs-logo.jpg" width="100">
 
-[![Mira-mi.png](https://i.postimg.cc/4y3bKWWd/Mira-mi.png)](https://postimg.cc/tZLVwNQQ)
+<img src="https://i.postimg.cc/4y3bKWWd/Mira-mi.png" width="100">
 
 ## COHORTE
 
