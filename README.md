@@ -1,7 +1,5 @@
 # NO COUNTRY
-<img src="https://i.postimg.cc/7YRtPQ99/nocountryforjuniordevs-logo.jpg" width="100">
-
-<img src="https://i.postimg.cc/4y3bKWWd/Mira-mi.png" width="100">
+<img src="https://i.postimg.cc/7YRtPQ99/nocountryforjuniordevs-logo.jpg" width="100"><img src="https://i.postimg.cc/4y3bKWWd/Mira-mi.png" width="100">
 
 ## COHORTE
 
