@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { PropTypes } from "prop-types";
 import {
   Button,
@@ -8,22 +8,25 @@ import {
   Input,
   ButtonGroup,
   Select,
-  Icon,
 } from "@chakra-ui/react";
-
-import { ChevronUpIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
 import PopoverModal from "@/components/ui/PopoverModal";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { ProductContext } from "@/components/context/productos/ProductContext";
-
+import { BASE_URL } from "@/utils/connectApi";
+import SuccessModal from "@/components/ui/SuccessModal";
 export default function ProductForm({ showform }) {
-  let { product, addProducts, categories, addNewCategory } =
+  let { product, addProducts, categories, addNewCategory, listCategories } =
     useContext(ProductContext);
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [openPopover, setOpenPopover] = useState(false);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
+
+  useEffect(() => {
+    listCategories();
+  }, []);
 
   const handlerButton = (errors) => {
     return Object.keys(errors).length !== 0;
@@ -44,6 +47,14 @@ export default function ProductForm({ showform }) {
 
   const closeHandler = () => {
     setOpenPopover(false);
+  };
+
+  const toOpenSuccessModal = () => {
+    setOpenSuccessModal(true);
+  };
+  const closeSuccessModal = () => {
+    showform();
+    setOpenSuccessModal(false);
   };
 
   return (
@@ -96,17 +107,18 @@ export default function ProductForm({ showform }) {
           product = {
             detalle: values.productName,
             precio: values.price,
-            codigo: values.code,
-            categoria: selectedCategory,
+            codigoBarra: values.code,
+            categoria: values.category,
             fechaAlta: values.date,
             cantidad: values.quantity,
             marca: values.brand,
             imagenUrl: values.image,
           };
+          toOpenSuccessModal();
           setTimeout(() => {
             addProducts(product);
-            showform();
-          }, 3000);
+            BASE_URL.post("nuevo", product);
+          }, 500);
         }}
       >
         {(props) => (
@@ -172,11 +184,11 @@ export default function ProductForm({ showform }) {
                 name="category"
                 focusBorderColor="green.500"
                 onChange={handlerCategory}
-                value={selectedCategory}
+                value={(props.values.category = selectedCategory)}
               >
-                {categories?.map((category, index) => {
+                {categories?.map((category) => {
                   return (
-                    <option value={category.nombre} key={index}>
+                    <option value={category.nombre} key={category.nombre}>
                       {category.nombre}
                     </option>
                   );
@@ -223,8 +235,7 @@ export default function ProductForm({ showform }) {
                 fontWeight="bold"
                 backgroundColor="white"
               >
-             Cantidad
-
+                Cantidad
               </FormLabel>
               <ErrorMessage name="quantity" component="div" color="red" />
             </FormControl>
@@ -271,6 +282,7 @@ export default function ProductForm({ showform }) {
                 colorScheme="teal"
                 type="submit"
                 isDisabled={handlerButton(props.errors)}
+                isLoading={props.isSubmitting}
               >
                 Confirmar
               </Button>
@@ -281,6 +293,11 @@ export default function ProductForm({ showform }) {
           </Form>
         )}
       </Formik>
+      <SuccessModal
+        isOpen={openSuccessModal}
+        onClose={closeSuccessModal}
+        textValue={"producto agregado exitosamente"}
+      />
     </Box>
   );
 }
@@ -290,4 +307,6 @@ ProductForm.propTypes = {
   handleSubmit: PropTypes.func,
   handleChange: PropTypes.func,
   errors: PropTypes.func,
+  values: PropTypes.func,
+  isSubmitting: PropTypes.func,
 };

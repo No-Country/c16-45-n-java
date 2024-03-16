@@ -13,6 +13,7 @@ import {
   Button,
   FormErrorMessage,
 } from "@chakra-ui/react";
+import { BASE_URL } from "@/utils/connectApi";
 import { ProductContext } from "@/components/context/productos/ProductContext";
 
 export default function PopoverModal({ isOpen, onClose }) {
@@ -28,13 +29,16 @@ export default function PopoverModal({ isOpen, onClose }) {
         nombre: newCategory.current.value,
         descripcion: descriptionCategory.current.value,
       };
-      addNewCategory(category);
     } else {
       setError({
         message: "por favor, agregue una nueva categoria con una descripcion",
       });
     }
-    setTimeout(() => onClose(), 3000);
+    setTimeout(() => {
+      BASE_URL.post("categorias", category);
+      addNewCategory(category);
+      onClose();
+    }, 500);
   };
   return (
     <Popover
@@ -79,10 +83,10 @@ export default function PopoverModal({ isOpen, onClose }) {
           {error && <FormErrorMessage value={error.message} />}
           <ButtonGroup display="flex" justifyContent="flex-end">
             <Button variant="outline" onClick={onClose}>
-              Cancel
+              Cancelar
             </Button>
             <Button colorScheme="teal" onClick={saveCategory}>
-              Save
+              Guardar
             </Button>
           </ButtonGroup>
           <PopoverArrow />

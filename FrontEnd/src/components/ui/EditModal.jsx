@@ -8,12 +8,7 @@ import {
   ModalCloseButton,
 } from "@chakra-ui/react";
 import EditForm from "@/components/products/EditForm";
-export default function EditModal({
-  isOpen,
-  onClose,
-  initialValues,
-  onSubmit,
-}) {
+export default function EditModal({ isOpen, onClose, initialValues }) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -21,12 +16,7 @@ export default function EditModal({
         <ModalHeader textAlign="center">Modificar Producto</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <EditForm
-            showModal={isOpen}
-            values={initialValues}
-            submitHandler={onSubmit}
-            showform={onClose}
-          />
+          <EditForm values={initialValues} onClose={onClose} />
         </ModalBody>
       </ModalContent>
     </Modal>
@@ -34,6 +24,7 @@ export default function EditModal({
 }
 
 EditModal.propTypes = {
+  isOpen: PropTypes.bool,
   onClose: PropTypes.func,
-  onSubmit: PropTypes.func,
+  initialValues: PropTypes.object,
 };

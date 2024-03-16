@@ -7,9 +7,12 @@ import ProductContextProvider from "@/components/context/productos/ProductContex
 export const Principal = () => {
   return (
     <ProductContextProvider>
-      <Container maxW="{[80%, sm, md]}" h="100vh">
+      <Container 
+      maxW={"100%"} h="100vh"
+     
+       >
         <Navbar />
-        <Header />
+        <Header/>
         <ProductsTable />
       </Container>
     </ProductContextProvider>
