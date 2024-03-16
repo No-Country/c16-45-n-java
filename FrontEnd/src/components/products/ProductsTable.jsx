@@ -24,16 +24,12 @@ import {
   useColorMode,
   useTheme,
 } from "@chakra-ui/react";
-<<<<<<< HEAD
-import { ChevronDownIcon, ChevronUpIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-=======
 import {
   ChevronDownIcon,
   ChevronUpIcon,
   DeleteIcon,
   EditIcon,
 } from "@chakra-ui/icons";
->>>>>>> dev-omar
 import { ProductContext } from "@/components/context/productos/ProductContext";
 import EditModal from "@/components/ui/EditModal";
 import DialogAlert from "@/components/ui/DialogAlert";
@@ -81,14 +77,6 @@ export default function ProductsTable() {
   const closeEditModal = () => {
     setEditModalOpen(false);
   };
-<<<<<<< HEAD
-  const [cat,setCat]=useState(false)
-  
-  function handlerCat(e,tipo){
-     setCat(ordenar(cat,products,tipo))
-  
-  }
-=======
 
   // MOBILE
   const [cat, setCat] = useState(false);
@@ -97,7 +85,6 @@ export default function ProductsTable() {
   }
   const isMobile = useBreakpointValue({ base: true, lg: false });
 
->>>>>>> dev-omar
   return (
     <>
       {isMobile ? (
