@@ -5,12 +5,11 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { LoginProvider} from "./components/context/LoginProvider.jsx"
 import { configTheme} from "./assets/theme.js";
 
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <LoginProvider>
       <ChakraProvider theme={configTheme} >
-          <App  />
+          <App />
       </ChakraProvider>
     </LoginProvider>
   </React.StrictMode>

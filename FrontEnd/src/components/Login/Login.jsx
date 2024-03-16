@@ -17,7 +17,6 @@ import { useContext, useState } from "react";
 import { LoginContext } from "../context/LoginContext";
 
 import { useNavigate } from "react-router-dom";
-//const URI_BASE_API="http://localhost:8080/api/"
 
 export const Login = () => {
   const [error, setError] = useState("");

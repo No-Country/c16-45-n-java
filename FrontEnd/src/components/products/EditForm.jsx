@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { PropTypes } from "prop-types";
 import {
   Button,
@@ -8,42 +8,71 @@ import {
   Input,
   ButtonGroup,
   Select,
-  Editable,
-  EditableInput,
 } from "@chakra-ui/react";
-import PopoverModal from "@/components/ui/PopoverModal";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+
+import { Formik, Form, Field, ErrorMessage, useFormik } from "formik";
 import * as Yup from "yup";
 import { ProductContext } from "../context/productos/ProductContext";
-import { BASE_URL } from "@/utils/connectApi";
+import SuccessModal from "@/components/ui/SuccessModal";
 
-export default function EditForm({ showform, product, submitHandler }) {
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [openPopover, setOpenPopover] = useState(false);
-  let { categories, addNewCategory } = useContext(ProductContext);
+export default function EditForm({ values, onClose }) {
+  const { categories, listCategories, editProducts } =
+    useContext(ProductContext);
+  const [openSuccessModal, setOpenSuccessModal] = useState(false);
 
-  const addCategoryHandler = (value) => {
-    if (value === "add") {
-      return setOpenPopover(true);
-    }
-    addNewCategory(value);
-  };
+  useEffect(() => {
+    listCategories();
+  }, []);
 
-  const handlerCategory = (event) => {
-    const chooseValue = event.target.value;
-    setSelectedCategory(chooseValue);
-    chooseValue === "add" && addCategoryHandler(chooseValue);
-  };
+  const formik = useFormik({
+    initialValues: values,
+    validationSchema: Yup.object({
+      detalle: Yup.string().required("Coloca el nombre del producto"),
+      precio: Yup.number()
+        .required("Coloca un precio en formato 0.00")
+        .round("floor"),
+      categoria: Yup.string().required(
+        "Selecciona una opcion o crea una categoria nueva"
+      ),
+      codigoBarra: Yup.string().required("Agrega un codigo para el producto"),
+      fechaAlta: Yup.date()
+        .default(() => Date.now())
+        .required("Elige o coloca una fecha"),
+      cantidad: Yup.number()
+        .min(1)
+        .integer()
+        .required("Coloca la cantidad de productos"),
+      marca: Yup.string().required(
+        "Coloque el nombre de la marca correspondiente"
+      ),
+      imagenUrl: Yup.string().required(
+        "Se require el enlace de la imagen del producto"
+      ),
+    }),
+
+    onSubmit(values) {
+      setTimeout(() => {
+        editProducts(values);
+        toOpenSuccessModal();
+      }, 500);
+    },
+  });
 
   const handlerButton = (errors) => {
     return Object.keys(errors).length !== 0;
   };
 
-  useEffect(() => {
-    BASE_URL.get("categorias")
-      .then((response) => console.log(response.data))
-      .catch((error) => console.log(error));
-  });
+  const handlerFields = (fieldName, value) => {
+    formik.setFieldValue(fieldName, value);
+  };
+
+  const toOpenSuccessModal = () => {
+    setOpenSuccessModal(true);
+  };
+  const closeSuccessModal = () => {
+    setOpenSuccessModal(false);
+    onClose();
+  };
 
   return (
     <Box
@@ -56,49 +85,21 @@ export default function EditForm({ showform, product, submitHandler }) {
       boxShadow="2xl"
     >
       <Formik
-        initialValues={product}
-        validationSchema={Yup.object({
-          detalle: Yup.string().required("Coloca el nombre del producto"),
-          precio: Yup.number()
-            .required("Coloca un precio en formato 0.00")
-            .round("floor"),
-          categoria: Yup.string().required(
-            "Selecciona una opcion o crea una categoria nueva"
-          ),
-          fechaAlta: Yup.date()
-            .default(() => Date.now())
-            .required("Elige o coloca una fecha"),
-          cantidad: Yup.number()
-            .min(1)
-            .integer()
-            .required("Coloca la cantidad de productos"),
-          marca: Yup.string().required(
-            "Coloque el nombre de la marca correspondiente"
-          ),
-          imagenUrl: Yup.string().required(
-            "Se require el enlace de la imagen del producto"
-          ),
-        })}
-        onSubmit={(values) => {
-          submitHandler(values);
-          showform();
-        }}
+        enableReinitialize
+        initialValues={formik.initialValues}
+        validationSchema={formik.validationSchema}
+        onSubmit={formik.onSubmit}
       >
-        {(props) => (
-          <Form onSubmit={props.handleSubmit}>
-            {console.log(props.values)}
+        {({ isSubmitting, errors }) => (
+          <Form onSubmit={formik.handleSubmit}>
             <FormControl variant="floating" isRequired my="5">
-              <Editable defaultValue={props.values.detalle}>
-                <EditableInput />
-              </Editable>
               <Field
                 as={Input}
                 type="text"
-                placeholder={props.values.detalle}
                 focusBorderColor="green.500"
-                value={props.getFieldProps("productName").value}
-                onChange={props.handleChange}
-                name="productName"
+                id="detalle"
+                onChange={(e) => handlerFields("detalle", e.target.value)}
+                value={formik.values.detalle}
               />
               <FormLabel
                 htmlFor="productName"
@@ -114,11 +115,10 @@ export default function EditForm({ showform, product, submitHandler }) {
               <Field
                 as={Input}
                 type="number"
-                placeholder={props.values.precio}
-                onChange={props.handleChange}
                 focusBorderColor="green.500"
-                value={props.getFieldProps("price").value}
-                name="price"
+                id="precio"
+                onChange={(e) => handlerFields("precio", e.target.value)}
+                value={formik.values.precio}
               />
               <FormLabel
                 htmlFor="price"
@@ -132,12 +132,11 @@ export default function EditForm({ showform, product, submitHandler }) {
             <FormControl variant="floating" isRequired my="5">
               <Field
                 as={Input}
-                name="code"
+                id="codigoBarra"
                 type="text"
-                onChange={props.handleChange}
                 focusBorderColor="green.500"
-                placeholder={props.values.codigo}
-                value={props.getFieldProps("code").value}
+                onChange={(e) => handlerFields("codigoBarra", e.target.value)}
+                value={formik.values.codigoBarra}
               ></Field>
               <FormLabel
                 htmlFor="code"
@@ -152,20 +151,17 @@ export default function EditForm({ showform, product, submitHandler }) {
             <FormControl variant="floating" isRequired my="5">
               <Field
                 as={Select}
-                placeholder="Selecciona una categoria"
                 name="category"
                 focusBorderColor="green.500"
-                onChange={handlerCategory}
-                value={selectedCategory}
+                value={formik.values.categoria}
               >
-                {categories?.map((category, index) => {
+                {categories?.map((category) => {
                   return (
-                    <option value={category.nombre} key={index}>
+                    <option value={category.nombre} key={category.nombre}>
                       {category.nombre}
                     </option>
                   );
                 })}
-                <option value="add">Agregar Categoria</option>
               </Field>
               <FormLabel
                 htmlFor="category"
@@ -176,16 +172,13 @@ export default function EditForm({ showform, product, submitHandler }) {
               </FormLabel>
               <ErrorMessage name="category" component="div" color="red" />
             </FormControl>
-            <PopoverModal showPopover={openPopover} />
             <FormControl variant="floating" isRequired my="5">
               <Field
                 as={Input}
                 type="date"
                 name="date"
-                placeholder={props.values.fechaAlta}
                 focusBorderColor="green.500"
-                onChange={props.handleChange}
-                value={props.getFieldProps("date").value}
+                value={formik.values.fechaAlta}
               />
               <FormLabel
                 htmlFor="date"
@@ -200,11 +193,11 @@ export default function EditForm({ showform, product, submitHandler }) {
               <Field
                 as={Input}
                 type="number"
-                placeholder={props.values.cantidad}
-                onChange={props.handleChange}
                 name="quantity"
                 focusBorderColor="green.500"
-                value={props.getFieldProps("quantity").value}
+                id="cantidad"
+                onChange={(e) => handlerFields("cantidad", e.target.value)}
+                value={formik.values.cantidad}
               />
               <FormLabel
                 htmlFor="quantity"
@@ -220,10 +213,8 @@ export default function EditForm({ showform, product, submitHandler }) {
                 as={Input}
                 type="text"
                 focusBorderColor="green.500"
-                placeholder={props.values.marca}
-                onChange={props.handleChange}
                 name="brand"
-                value={props.getFieldProps("brand").value}
+                value={formik.values.marca}
               />
               <FormLabel
                 htmlFor="brand"
@@ -241,9 +232,9 @@ export default function EditForm({ showform, product, submitHandler }) {
                 type="text"
                 focusBorderColor="green.500"
                 name="image"
-                onChange={props.handleChange}
-                placeholder={props.values.imagenUrl}
-                value={props.getFieldProps("image").value}
+                id="imagenUrl"
+                onChange={(e) => handlerFields("imagenUrl", e.target.value)}
+                value={formik.values.imagenUrl}
               />
               <FormLabel
                 htmlFor="image"
@@ -259,28 +250,29 @@ export default function EditForm({ showform, product, submitHandler }) {
               <Button
                 colorScheme="teal"
                 type="submit"
-                isDisabled={handlerButton(props.errors)}
+                onClick={handlerButton}
+                isDisabled={handlerButton(errors)}
+                isLoading={isSubmitting}
               >
                 Modificar
               </Button>
-              <Button colorScheme="red" type="submit" onClick={showform}>
+              <Button colorScheme="red" type="submit" onClick={onClose}>
                 Cancelar
               </Button>
             </ButtonGroup>
           </Form>
         )}
       </Formik>
+      <SuccessModal
+        isOpen={openSuccessModal}
+        onClose={closeSuccessModal}
+        textValue={"producto modificado exitosamente"}
+      />
     </Box>
   );
 }
 
 EditForm.propTypes = {
-  showform: PropTypes.func,
-  handleSubmit: PropTypes.func,
-  handleChange: PropTypes.func,
-  errors: PropTypes.func,
-  submitHandler: PropTypes.func,
+  onClose: PropTypes.func,
   values: PropTypes.object,
-  product: PropTypes.object,
-  getFieldProps: PropTypes.func,
 };
