@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "serve dist -s -n -L -p $PORT",
+    "start": "env-cmd -f ./environments/.env.production serve dist -s -n -L -p $PORT",
     "start:dev": "env-cmd -f ./environments/.env.development vite",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "start:prod": "serve dist -s -n -L -p $PORT"
+    "preview": "vite preview"
+    
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",

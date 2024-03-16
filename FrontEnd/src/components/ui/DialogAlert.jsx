@@ -1,6 +1,5 @@
-import { useRef, useContext } from "react";
+import { useContext, useRef } from "react";
 import { PropTypes } from "prop-types";
-import { ProductContext } from "@/components/context/productos/ProductContext";
 
 import {
   AlertDialog,
@@ -12,13 +11,19 @@ import {
   AlertDialogCloseButton,
   Button,
 } from "@chakra-ui/react";
+import { ProductContext } from "@/components/context/productos/ProductContext";
+import { BASE_URL } from "@/utils/connectApi";
 
 export default function DialogAlert({ isOpen, onClose, product }) {
-  const cancelRef = useRef();
-  const approveRef = useRef();
-
   const { deleteProducts } = useContext(ProductContext);
-
+  const cancelRef = useRef();
+  const handlerDelete = (value) => {
+    setTimeout(() => {
+      BASE_URL.delete(`eliminar/${value.id}`);
+      deleteProducts(value);
+      onClose();
+    }, 500);
+  };
   return (
     <AlertDialog
       isOpen={isOpen}
@@ -29,6 +34,7 @@ export default function DialogAlert({ isOpen, onClose, product }) {
         <AlertDialogContent>
           <AlertDialogHeader fontSize="lg" fontWeight="bold">
             <h3>Eliminar el Producto:</h3>
+            <p>{product?.detalle}</p>
           </AlertDialogHeader>
 
           <AlertDialogBody>
@@ -41,10 +47,7 @@ export default function DialogAlert({ isOpen, onClose, product }) {
             </Button>
             <Button
               colorScheme="red"
-              ref={approveRef}
-              onClick={() =>
-                deleteProducts(product, approveRef) ? onClose() : null
-              }
+              onClick={() => handlerDelete(product)}
               ml={3}
             >
               Delete

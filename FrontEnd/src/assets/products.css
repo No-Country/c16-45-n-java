@@ -1,0 +1,52 @@
+table {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+  
+  table tr {
+    border-right: 2px solid #ddd;
+    border-bottom: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+  }
+  
+  table thead th,
+  table tbody td {
+    padding: .625em;
+    text-align: center;
+    background-color: #f8f8f8;
+  }
+  
+  table thead th {
+    font-size: .85em;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+  }
+  
+  table thead tr:first-child {
+    border-left: none;
+    border-right: none;
+  }
+  
+  table thead tr:first-child th {
+    position: relative;
+    padding: 0;
+    background-color: transparent;
+  }
+  
+  .tab {
+   
+    left: 1px;
+    display: block;
+    padding: .625em;
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid #ddd;
+    border-right: 2px solid #ddd;
+    border-left: 2px solid #ddd;
+    border-radius: 25px;
+    background-color: #f8f8f8;
+  }
+  

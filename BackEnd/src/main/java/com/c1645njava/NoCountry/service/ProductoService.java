@@ -16,4 +16,8 @@ public interface ProductoService {
 
     void eliminarProducto(Long id);
 
+    //Creado para filtrar por precio min y max de productos
+    List<Producto> filtrarPorPrecio(
+            String codigo, Double minPrecio, Double maxPrecio, Integer minCantidad, Integer maxCantidad, String categoria
+    );
 }
